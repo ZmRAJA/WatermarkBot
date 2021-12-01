@@ -1,4 +1,4 @@
-# (c) @AbirHasan2005
+# (c) @VideosWaterMarkRobot
 
 # This is Telegram Video Watermark Adder Bot's Source Code.
 # I Hardly Made This. So Don't Forget to Give Me Credits.
@@ -8,8 +8,8 @@
 # Edit anything at your own risk!
 
 # Don't forget to help me if I done any mistake in the codes.
-# Support Group: @DevsZone 
-# Bots Channel: @Discovery_Updates
+# Support Group: @VideosWaterMarkRobot
+# Bots Channel: @VideosWaterMarkRobot
 
 
 import os
@@ -34,10 +34,10 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQ
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, MessageNotModified
 
-AHBot = Client(Config.BOT_USERNAME, bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, api_hash=Config.API_HASH)
+VideosWaterMarkRobot = Client(Config.BOT_USERNAME, bot_token=Config.BOT_TOKEN, api_id=Config.API_ID, api_hash=Config.API_HASH)
 
 
-@AHBot.on_message(filters.command(["start", "help"]) & filters.private)
+@VideosWaterMarkRobot.on_message(filters.command(["start", "help"]) & filters.private)
 async def HelpWatermark(bot, cmd):
 	if not await db.is_user_exist(cmd.from_user.id):
 		await db.add_user(cmd.from_user.id)
@@ -52,12 +52,12 @@ async def HelpWatermark(bot, cmd):
 	await cmd.reply_text(
 		text=Config.USAGE_WATERMARK_ADDER,
 		parse_mode="Markdown",
-		reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Developer", url="https://t.me/AbirHasan2005"), InlineKeyboardButton("Support Group", url="https://t.me/DevsZone")], [InlineKeyboardButton("Bots Channel", url="https://t.me/Discovery_Updates")], [InlineKeyboardButton("Source Code", url="https://github.com/AbirHasan2005/Watermark-Bot")]]),
+		reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Developer", url="http://t.me/VideosWaterMarkRobot"), InlineKeyboardButton("Support Group", url="http://t.me/VideosWaterMarkRobot")], [InlineKeyboardButton("Bots Channel", url="http://t.me/VideosWaterMarkRobot")], [InlineKeyboardButton("Source Code", url="https://github.com/ZmRAJA/WatermarkBot")]]),
 		disable_web_page_preview=True
 	)
 
 
-@AHBot.on_message(filters.command("settings") & filters.private)
+@VideosWaterMarkRobot.on_message(filters.command("settings") & filters.private)
 async def SettingsBot(bot, cmd):
 	if not await db.is_user_exist(cmd.from_user.id):
 		await db.add_user(cmd.from_user.id)
@@ -122,7 +122,7 @@ async def SettingsBot(bot, cmd):
 	)
 
 
-@AHBot.on_message(filters.document | filters.video | filters.photo & filters.private)
+@VideosWaterMarkRobot.on_message(filters.document | filters.video | filters.photo & filters.private)
 async def VidWatermarkAdder(bot, cmd):
 	if not await db.is_user_exist(cmd.from_user.id):
 		await db.add_user(cmd.from_user.id)
@@ -149,7 +149,7 @@ async def VidWatermarkAdder(bot, cmd):
 		return
 	else:
 		pass
-	working_dir = Config.DOWN_PATH + "/WatermarkAdder/"
+	working_dir = Config.DOWN_PATH + "/VideosWaterMarkRobot/"
 	if not os.path.exists(working_dir):
 		os.makedirs(working_dir)
 	watermark_path = Config.DOWN_PATH + "/" + str(cmd.from_user.id) + "/thumb.jpg"
@@ -160,7 +160,7 @@ async def VidWatermarkAdder(bot, cmd):
 	if not file_type.mime_type.startswith("video/"):
 		await cmd.reply_text("This is not a Video!")
 		return
-	status = Config.DOWN_PATH + "/WatermarkAdder/status.json"
+	status = Config.DOWN_PATH + "/VideosWaterMarkRobot/status.json"
 	if os.path.exists(status):
 		await cmd.reply_text("Sorry, Currently I am busy with another Task!\n\nTry Again After Sometime!")
 		return
@@ -172,7 +172,7 @@ async def VidWatermarkAdder(bot, cmd):
 			'message': editable.message_id
 		}
 		json.dump(statusMsg, f, indent=2)
-	dl_loc = Config.DOWN_PATH + "/WatermarkAdder/" + str(cmd.from_user.id) + "/"
+	dl_loc = Config.DOWN_PATH + "/VideosWaterMarkRobot/" + str(cmd.from_user.id) + "/"
 	if not os.path.isdir(dl_loc):
 		os.makedirs(dl_loc)
 	the_media = None
@@ -227,8 +227,8 @@ async def VidWatermarkAdder(bot, cmd):
 		duration = metadata.get('duration').seconds
 	the_media_file_name = os.path.basename(the_media)
 	main_file_name = os.path.splitext(the_media_file_name)[0]
-	output_vid = main_file_name + "_[" + str(cmd.from_user.id) + "]_[" + str(time.time()) + "]_[@AbirHasan2005]" + ".mp4"
-	progress = Config.DOWN_PATH + "/WatermarkAdder/" + str(cmd.from_user.id) + "/progress.txt"
+	output_vid = main_file_name + "_[" + str(cmd.from_user.id) + "]_[" + str(time.time()) + "]_[@VideosWaterMarkRobot]" + ".mp4"
+	progress = Config.DOWN_PATH + "/VideosWaterMarkRobot/" + str(cmd.from_user.id) + "/progress.txt"
 	try:
 		output_vid = await vidmark(the_media, editable, progress, watermark_path, output_vid, duration, logs_msg, status, preset, watermark_position, watermark_size)
 	except Exception as err:
@@ -256,7 +256,7 @@ async def VidWatermarkAdder(bot, cmd):
 		height = metadata.get("height")
 	video_thumbnail = None
 	try:
-		video_thumbnail = Config.DOWN_PATH + "/WatermarkAdder/" + str(cmd.from_user.id) + "/" + str(time.time()) + ".jpg"
+		video_thumbnail = Config.DOWN_PATH + "/VideosWaterMarkRobot/" + str(cmd.from_user.id) + "/" + str(time.time()) + ".jpg"
 		ttl = random.randint(0, int(duration) - 1)
 		file_genertor_command = [
 			"ffmpeg",
@@ -304,7 +304,7 @@ async def VidWatermarkAdder(bot, cmd):
 				await logs_msg.edit("Successfully Uploaded File to Streamtape!\n\nI am Free Now!", parse_mode="Markdown", disable_web_page_preview=True)
 		except Exception as e:
 			print(f"Error: {e}")
-			await editable.edit("Sorry, Something went wrong!\n\nCan't Upload to Streamtape. You can report at [Support Group](https://t.me/linux_repo).")
+			await editable.edit("Sorry, Something went wrong!\n\nCan't Upload to Streamtape. You can report at [Support Group](https://t.me/VideosWaterMarkRobot).")
 			await logs_msg.edit(f"Got Error While Uploading to Streamtape!\n\nError: {e}")
 		await delete_all()
 		return
@@ -329,8 +329,8 @@ async def VidWatermarkAdder(bot, cmd):
 	await bot.send_message(chat_id=Config.LOG_CHANNEL, text=f"#WATERMARK_ADDED: Video Uploaded!\n\n{user_info}", reply_to_message_id=forward_vid.message_id, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Ban User", callback_data=f"ban_{cmd.from_user.id}")]]))
 
 
-@AHBot.on_message(filters.command("cancel") & filters.private)
-async def CancelWatermarkAdder(bot, cmd):
+@VideosWaterMarkRobot.on_message(filters.command("cancel") & filters.private)
+async def CancelVideosWaterMarkRobot(bot, cmd):
 	if not await db.is_user_exist(cmd.from_user.id):
 		await db.add_user(cmd.from_user.id)
 		await bot.send_message(
@@ -341,7 +341,7 @@ async def CancelWatermarkAdder(bot, cmd):
 		await cmd.reply_text("You Can't Use That Command!")
 		return
 
-	status = Config.DOWN_PATH + "/WatermarkAdder/status.json"
+	status = Config.DOWN_PATH + "/VideosWaterMarkRobot/status.json"
 	with open(status, 'r+') as f:
 		statusMsg = json.load(f)
 		if 'pid' in statusMsg.keys():
@@ -359,14 +359,14 @@ async def CancelWatermarkAdder(bot, cmd):
 			pass
 
 
-@AHBot.on_message(filters.private & filters.command("broadcast") & filters.user(Config.OWNER_ID) & filters.reply)
+@VideosWaterMarkRobot.on_message(filters.private & filters.command("broadcast") & filters.user(Config.OWNER_ID) & filters.reply)
 async def open_broadcast_handler(bot, message):
 	await broadcast_handler(c=bot, m=message)
 
 
-@AHBot.on_message(filters.private & filters.command("status"))
+@VideosWaterMarkRobot.on_message(filters.private & filters.command("status"))
 async def sts(_, m):
-	status = Config.DOWN_PATH + "/WatermarkAdder/status.json"
+	status = Config.DOWN_PATH + "/VideosWaterMarkRobot/status.json"
 	if os.path.exists(status):
 		msg_text = "Sorry, Currently I am busy with another Task!\nI can't add Watermark at this moment."
 	else:
@@ -377,7 +377,7 @@ async def sts(_, m):
 	await m.reply_text(text=msg_text, parse_mode="Markdown", quote=True)
 
 
-@AHBot.on_callback_query()
+@VideosWaterMarkRobot.on_callback_query()
 async def button(bot, cmd: CallbackQuery):
 	cb_data = cmd.data
 	if "refreshmeh" in cb_data:
@@ -387,7 +387,7 @@ async def button(bot, cmd: CallbackQuery):
 				user = await bot.get_chat_member(int(Config.UPDATES_CHANNEL), cmd.message.chat.id)
 				if user.status == "kicked":
 					await cmd.message.edit(
-						text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/DevsZone).",
+						text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/VideosWaterMarkRobot).",
 						parse_mode="markdown",
 						disable_web_page_preview=True
 					)
@@ -410,7 +410,7 @@ async def button(bot, cmd: CallbackQuery):
 				return
 			except Exception:
 				await cmd.message.edit(
-					text="Something went Wrong. Contact my [Support Group](https://t.me/DevsZone).",
+					text="Something went Wrong. Contact my [Support Group](https://t.me/VideosWaterMarkRobot).",
 					parse_mode="markdown",
 					disable_web_page_preview=True
 				)
@@ -418,7 +418,7 @@ async def button(bot, cmd: CallbackQuery):
 		await cmd.message.edit(
 			text=Config.USAGE_WATERMARK_ADDER,
 			parse_mode="Markdown",
-			reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Developer", url="https://t.me/AbirHasan2005"), InlineKeyboardButton("Support Group", url="https://t.me/DevsZone")], [InlineKeyboardButton("Bots Channel", url="https://t.me/Discovery_Updates")]]),
+			reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Developer", url="https://t.me/VideosWaterMarkRobot"), InlineKeyboardButton("Support Group", url="https://t.me/DevsZone")], [InlineKeyboardButton("Bots Channel", url="https://t.me/VideosWaterMarkRobot")]]),
 			disable_web_page_preview=True
 		)
 
@@ -435,7 +435,7 @@ async def button(bot, cmd: CallbackQuery):
 				user = await bot.get_chat_member(int(Config.UPDATES_CHANNEL), cmd.message.chat.id)
 				if user.status == "kicked":
 					await cmd.message.edit(
-						text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/DevsZone).",
+						text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/VideosWaterMarkRobot).",
 						parse_mode="markdown",
 						disable_web_page_preview=True
 					)
@@ -458,7 +458,7 @@ async def button(bot, cmd: CallbackQuery):
 				return
 			except Exception:
 				await cmd.message.edit(
-					text="Something went Wrong. Contact my [Support Group](https://t.me/DevsZone).",
+					text="Something went Wrong. Contact my [Support Group](https://t.me/VideosWaterMarkRobot).",
 					parse_mode="markdown",
 					disable_web_page_preview=True
 				)
@@ -535,4 +535,4 @@ async def button(bot, cmd: CallbackQuery):
 			await cmd.answer(f"Can't Ban Him!\n\nError: {e}", show_alert=True)
 
 
-AHBot.run()
+VideosWaterMarkRobot.run()
