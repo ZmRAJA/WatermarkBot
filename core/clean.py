@@ -1,4 +1,4 @@
-# (c) @AbirHasan2005
+# (c) @VideosWaterMarkRobot
 
 import os
 import shutil
@@ -12,7 +12,7 @@ async def delete_trash(file):
 
 async def delete_all():
     try:
-        root = Config.DOWN_PATH + "/WatermarkAdder/"
+        root = Config.DOWN_PATH + "/VideosWaterMarkRobot/"
         shutil.rmtree(root)
     except Exception as e:
         print(e)
